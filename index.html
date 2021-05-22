@@ -46,7 +46,6 @@
          Http.onreadystatechange = (e) => {
            //console.log(Http.responseText);
            parseData(Http.responseText);
-
          }
         }, 5000);
      }
@@ -58,7 +57,14 @@
       min_age_45.innerHTML='Slots for min age 45 : ';
       min_age_18.innerHTML='Slots for min age 18 : ';
 
-       var jsonData = JSON.parse(data);
+      var jsonData;
+      try {
+        jsonData = JSON.parse(data);
+      } catch (err) {
+        document.getElementById("45").innerHTML = err.message;
+        document.getElementById("18").innerHTML = err.message;
+        return;
+      }
        
        for(var cen in jsonData.centers)
        {
