@@ -1,0 +1,41 @@
+#clear45, #clear18{
+    background-color: white;
+    color: black;
+    border: 1px solid black;
+    display: inline-block;
+}
+
+#startbutton {
+    color: white;
+    background-color: rgb(37, 177, 37);
+    border: none;
+    padding: 7px 10px;
+    text-align: center;
+    border-radius: 5px;
+    display: inline-block;
+}
+
+#info {
+    color: #0718b6e7;
+    font-size: 12px;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    padding-left: 2px;
+}
+
+#dose1button {
+    color: white;
+    background-color: rgb(37, 177, 37);
+    border: 1px solid green;
+    padding: 2px 2px;
+    text-align: center;
+    display: inline-block;
+}
+
+#dose2button {
+    color: white;
+    background-color: rgba(235, 48, 48, 0.822);
+    border: 1px solid rgb(187, 3, 3);
+    padding: 2px 2px;
+    text-align: center;
+    display: inline-block;
+}

@@ -1,14 +1,18 @@
 <html>
 <head>
 <title>Cowin Vaccine Slots</title>
+<link rel="stylesheet" href="index.css">
 </head>
 <audio id="alarm" src="alarms.mp3" muted></audio>
-<p style="color: #000099;"><small><b>District</b> - North 24 pgs <b>Date</b> - 27th May to 2nd June</small></p>
-<button id="startbutton" style="color: green;" onclick="clicked()">Start scan<br/></button>
+<p id="info"><b>District</b> - North 24 pgs <b>Date</b> - 27th May to 2nd June</p>
+<button id="startbutton" onclick="clicked()">Start scan</button><br/>
 
 <p id="45">Slots for min age 45 : </p>
+<span><button id="clear45" onclick="clearResults(45)" style="display: none;">Clear</button></span>
 <pre id="results45"></pre>
+
 <p id="18">Slots for min age 18 : </p>
+<span><button id="clear18" onclick="clearResults(18)" style="display: none;">Clear</button></span>
 <pre id="results18"></pre>
 <pre><i><b>
   <span style="color: green;">Green buttons</span> -> for dose 1 & 
@@ -24,16 +28,16 @@
 
     function clicked() {
       var startButtonElement = document.getElementById("startbutton");
-       if(startButtonElement.style.color == "green") {
+       if(startButtonElement.innerHTML=="Start scan") {
         console.log("Starting scan ...");
         startButtonElement.innerHTML = "Stop scan";
-        startButtonElement.style.color = "red";
+        startButtonElement.style.backgroundColor = "red";
        }
        else {
         console.log("Stopping scan ...");
         clearInterval(intervalId);
         startButtonElement.innerHTML = "Start scan";
-        startButtonElement.style.color = "Green";
+        startButtonElement.style.backgroundColor = "rgb(37, 177, 37)";
         return;
        } 
 
@@ -48,7 +52,7 @@
            //console.log(Http.responseText);
            parseData(Http.responseText);
          }
-        }, 5000);
+        }, 10000);
      }
 
      function parseData(data) {
@@ -103,10 +107,10 @@
       
       if(session.available_capacity_dose1 != 0) {
         playAudio();
-        element.style="background-color:green; color:white";
+        element.id = "dose1button";
       }
       else {
-        element.style="background-color:red; color:white";
+        element.id = "dose2button";
       }
 
       element.onclick = function() { 
@@ -128,9 +132,11 @@
       var para2 ;
       if(minAge==45){
         para2 = document.getElementById("results45");
+        document.getElementById("clear45").style.display="block";
       }
       else{
         para2 = document.getElementById("results18");
+        document.getElementById("clear18").style.display="block";
       }
       
       para2.innerHTML = "Loading...";
@@ -155,6 +161,22 @@
     function playAudio() {
       document.getElementById('alarm').play();
       document.getElementById('alarm').muted = false;
+    }
+
+    function clearResults(minAge) {
+      var para2Element, clearParaElement;
+      if(minAge==45) {
+        para2Element = document.getElementById("results45");
+        clearParaElement = document.getElementById("clear45");
+        console.log("Clearing 45");
+      }
+      else {
+        para2Element = document.getElementById("results18");
+        clearParaElement = document.getElementById("clear18");
+        console.log("Clearing 18");
+      }
+      para2Element.innerHTML="";
+      clearParaElement.style.display="none";
     }
 
   </script>
