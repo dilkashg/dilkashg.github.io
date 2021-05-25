@@ -1,9 +1,9 @@
 <html>
 <head>
 <title>Cowin Vaccine Slots</title>
-</head
+</head>
 <audio id="alarm" src="alarms.mp3" muted></audio>
-<p style="color: #000099;"><small><b>District</b> - North 24 pgs <b>Date</b> - 23rd May to 29th May</small></p>
+<p style="color: #000099;"><small><b>District</b> - North 24 pgs <b>Date</b> - 26th May to 1st June</small></p>
 <button id="startbutton" style="color: green;" onclick="clicked()">Start scan<br/></button>
 
 <p id="45">Slots for min age 45 : </p>
@@ -16,29 +16,30 @@
 </b></i></pre>
 <br>
 <span><i><small>*Auto-refresh every 5 seconds</small></i></span><br>
-<span><i><small>**Alarm will be triggered for available slots for - min age 18 & min age 45 dose 1</small></i></span>
+<span><i><small>**Alarm will be triggered for available slots for - min age 18 & min age 45 - Dose 1</small></i></span>
 
   <script type="text/javascript">
 
     var intervalId = '';
 
     function clicked() {
-       if(document.getElementById("startbutton").style.color == "green") {
+      var startButtonElement = document.getElementById("startbutton");
+       if(startButtonElement.style.color == "green") {
         console.log("Starting scan ...");
-        document.getElementById("startbutton").innerHTML = "Stop scan";
-        document.getElementById("startbutton").style.color = "red";
+        startButtonElement.innerHTML = "Stop scan";
+        startButtonElement.style.color = "red";
        }
        else {
         console.log("Stopping scan ...");
         clearInterval(intervalId);
-        document.getElementById("startbutton").innerHTML = "Start scan";
-        document.getElementById("startbutton").style.color = "Green";
+        startButtonElement.innerHTML = "Start scan";
+        startButtonElement.style.color = "Green";
         return;
        } 
 
        intervalId = setInterval(function(){
          const Http = new XMLHttpRequest();
-         const url='https://cdn-api.co-vin.in/api/v2/appointment/sessions/calendarByDistrict?district_id=730&date=23-05-2021';
+         const url='https://cdn-api.co-vin.in/api/v2/appointment/sessions/calendarByDistrict?district_id=730&date=26-05-2021';
 		    //  const url='https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/calendarByPin?pincode=743126&date=21-05-2021';
          Http.open("GET", url);
          Http.send();
@@ -52,31 +53,20 @@
 
      function parseData(data) {
       //  cleaning
-      var min_age_45 = document.getElementById("45");
-      var min_age_18 = document.getElementById("18");
-      min_age_45.innerHTML='Slots for min age 45 : ';
-      min_age_18.innerHTML='Slots for min age 18 : ';
+      var minAge45Element = document.getElementById("45");
+      var minAge18Element = document.getElementById("18");
+      minAge45Element.innerHTML='Slots for min age 45 : ';
+      minAge18Element.innerHTML='Slots for min age 18 : ';
 
       var jsonData;
       try {
         jsonData = JSON.parse(data);
       } catch (err) {
-        document.getElementById("45").innerHTML = err.message;
-        document.getElementById("18").innerHTML = err.message;
+        minAge45Element.innerHTML = err.message;
+        minAge18Element.innerHTML = err.message;
         return;
       }
-       
-       for(var cen in jsonData.centers)
-       {
-      //   debugger;
-         var center = jsonData.centers[cen];
-         for(var sess in center.sessions) {
-           if(center.sessions[sess].available_capacity != 0)
-           {
-            var session = center.sessions[sess];
-             //document.getElementById('alarm').play();
-             //document.getElementById('alarm').muted = false;
-            var currentdate = new Date(); 
+       var currentdate = new Date(); 
             var datetime = "Last Sync: " + currentdate.getDate() + "/"
                     + (currentdate.getMonth()+1)  + "/" 
                     + currentdate.getFullYear() + " @ "  
@@ -84,6 +74,13 @@
                     + currentdate.getMinutes() + ":" 
                     + currentdate.getSeconds();
             console.log(datetime);
+       for(var cen in jsonData.centers)
+       {
+         var center = jsonData.centers[cen];
+         for(var sess in center.sessions) {
+           if(center.sessions[sess].available_capacity != 0)
+           {
+            var session = center.sessions[sess];
             console.log('center name ---> ' + center.name + ' for AGE ' + session.min_age_limit);
             // console.log(session);
 
@@ -91,8 +88,6 @@
               addButtons(center, session, 45);
             }
             else {
-              document.getElementById('alarm').play();
-              document.getElementById('alarm').muted = false;
               addButtons(center, session, 18);
             }
            }
@@ -100,15 +95,14 @@
        }
      }
 
-     function addButtons(center, session, min_age) {
+     function addButtons(center, session, minAge) {
       var element = document.createElement("input");
       element.type="button";
       element.value = center.name;
       element.name = center.name;
       
-      if(session.available_capacity_dose1!=0) {
-        document.getElementById('alarm').play();
-        document.getElementById('alarm').muted = false;
+      if(session.available_capacity_dose1 != 0) {
+        playAudio();
         element.style="background-color:green; color:white";
       }
       else {
@@ -116,23 +110,23 @@
       }
 
       element.onclick = function() { 
-        slotDetails(center, session, min_age);
+        slotDetails(center, session, minAge);
       }
       
-      if(min_age==45) {
-        var min_age_45 = document.getElementById("45");
-        min_age_45.appendChild(element);
+      if(minAge==45) {
+        var minAge45Element = document.getElementById("45");
+        minAge45Element.appendChild(element);
       }
-      if(min_age==18) {
-        var min_age_18 = document.getElementById("18");
-        min_age_18.appendChild(element);
+      if(minAge==18) {
+        var minAge18Element = document.getElementById("18");
+        minAge18Element.appendChild(element);
       }
     }
 
-    function slotDetails(center, session, min_age) {
+    function slotDetails(center, session, minAge) {
       console.log("Details requested for center: " + center.name);
       var para2 ;
-      if(min_age==45){
+      if(minAge==45){
         para2 = document.getElementById("results45");
       }
       else{
@@ -156,8 +150,11 @@
         "Session" : session
       }
       setTimeout(function(){ para2.innerHTML = JSON.stringify(resp, undefined, 2); }, 300);
-      
-      // para2.innerHTML = JSON.stringify(resp, undefined, 2);
+    }
+
+    function playAudio() {
+      document.getElementById('alarm').play();
+      document.getElementById('alarm').muted = false;
     }
 
   </script>
