@@ -3,8 +3,9 @@
 <title>Cowin Vaccine Slots</title>
 <link rel="stylesheet" href="index.css">
 </head>
+
 <audio id="alarm" src="alarms.mp3" muted></audio>
-<p id="info"><b>District</b> - North 24 pgs <b>Date</b> - 27th May to 2nd June</p>
+<pre id="info"><b>District</b> - North 24 pgs <b>Date</b> - 27th May to 2nd June</pre>
 <button id="startbutton" onclick="clicked()">Start scan</button><br/>
 
 <p id="45">Slots for min age 45 : </p>
@@ -14,13 +15,15 @@
 <p id="18">Slots for min age 18 : </p>
 <span><button id="clear18" onclick="clearResults(18)" style="display: none;">Clear</button></span>
 <pre id="results18"></pre>
-<pre><i><b>
-  <span style="color: green;">Green buttons</span> -> for dose 1 & 
-  <span style="color: red;">Red buttons</span> -> for dose 2
-</b></i></pre>
-<br>
-<span><i><small>*Auto-refresh every 5 seconds</small></i></span><br>
-<span><i><small>**Alarm will be triggered for available slots for - min age 18 & min age 45 - Dose 1</small></i></span>
+<pre id="myPre">
+  <span class="infoSpan1">Green buttons </span>-> for dose 1 &
+  <span class="infoSpan2">Red buttons </span>-> for dose 2 
+</pre><br>
+
+<pre id="note">
+* Auto-refresh every 10 seconds.
+** Alarm will be triggered for available slots for - min age 18 & min age 45 - Dose 1
+</pre>
 
   <script type="text/javascript">
 
