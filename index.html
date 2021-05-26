@@ -88,7 +88,6 @@
            if(center.sessions[sess].available_capacity != 0)
            {
             var session = center.sessions[sess];
-            console.log('center name ---> ' + center.name + ' for AGE ' + session.min_age_limit);
             // console.log(session);
 
             if(session.min_age_limit == 45) {
@@ -109,10 +108,12 @@
       element.name = center.name;
       
       if(session.available_capacity_dose1 != 0) {
+        console.log('center name ---> ' + center.name + ' for AGE ' + session.min_age_limit + ' DOSE 1');
         playAudio();
         element.id = "dose1button";
       }
       else {
+        console.log('center name ---> ' + center.name + ' for AGE ' + session.min_age_limit + ' DOSE 2');
         element.id = "dose2button";
       }
 
