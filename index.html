@@ -5,7 +5,7 @@
 </head>
 
 <audio id="alarm" src="alarms.mp3" muted></audio>
-<pre id="info"><b>District</b> - North 24 pgs <b>Date</b> - 28th May to 3rd June</pre>
+<pre id="info"><b>District</b> - North 24 pgs <b>Date</b> - 31st May to 6th June</pre>
 <button id="startbutton" onclick="clicked()">Start scan</button><br/>
 
 <p id="45">Slots for min age 45 : </p>
@@ -46,7 +46,7 @@
 
        intervalId = setInterval(function(){
          const Http = new XMLHttpRequest();
-         const url='https://cdn-api.co-vin.in/api/v2/appointment/sessions/calendarByDistrict?district_id=730&date=28-05-2021';
+         const url='https://cdn-api.co-vin.in/api/v2/appointment/sessions/calendarByDistrict?district_id=730&date=31-05-2021';
 		    //  const url='https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/calendarByPin?pincode=743126&date=21-05-2021';
          Http.open("GET", url);
          Http.send();
